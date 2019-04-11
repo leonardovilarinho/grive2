@@ -577,6 +577,7 @@ void Resource::SyncSelf( Syncer* syncer, ResourceTree *res_tree, const Val& opti
 		{
 			m_state = sync ;
 			SetIndex( false );
+			system("notify-send -i emblem-synchronizing-symbolic -u low 'Google Drive' 'A sincronização terminou!'") ;
 		}
 		break ;
 	
@@ -586,6 +587,7 @@ void Resource::SyncSelf( Syncer* syncer, ResourceTree *res_tree, const Val& opti
 		{
 			syncer->DeleteRemote( this ) ;
 			DeleteIndex() ;
+			system("notify-send -i emblem-synchronizing-symbolic -u low 'Google Drive' 'A sincronização terminou!'") ;
 		}
 		break ;
 	
@@ -595,6 +597,7 @@ void Resource::SyncSelf( Syncer* syncer, ResourceTree *res_tree, const Val& opti
 		{
 			m_state = sync ;
 			SetIndex( false );
+			system("notify-send -i emblem-synchronizing-symbolic -u low 'Google Drive' 'A sincronização terminou!'") ;
 		}
 		break ;
 	
@@ -612,6 +615,7 @@ void Resource::SyncSelf( Syncer* syncer, ResourceTree *res_tree, const Val& opti
 					syncer->Download( this, path ) ;
 				SetIndex( true ) ;
 				m_state = sync ;
+				system("notify-send -i emblem-synchronizing-symbolic -u low 'Google Drive' 'A sincronização terminou!'") ;
 			}
 		}
 		break ;
@@ -628,6 +632,7 @@ void Resource::SyncSelf( Syncer* syncer, ResourceTree *res_tree, const Val& opti
 				syncer->Download( this, path ) ;
 				SetIndex( true ) ;
 				m_state = sync ;
+				system("notify-send -i emblem-synchronizing-symbolic -u low 'Google Drive' 'A sincronização terminou!'") ;
 			}
 		}
 		break ;
@@ -638,12 +643,14 @@ void Resource::SyncSelf( Syncer* syncer, ResourceTree *res_tree, const Val& opti
 		{
 			DeleteLocal() ;
 			DeleteIndex() ;
+			system("notify-send -i emblem-synchronizing-symbolic -u low 'Google Drive' 'A sincronização terminou!'") ;
 		}
 		break ;
 	
 	case both_deleted :
 		if ( syncer ) {
-			DeleteIndex() ;			
+			DeleteIndex() ;
+			system("notify-send -i emblem-synchronizing-symbolic -u low 'Google Drive' 'A sincronização terminou!'") ;
 		}
 		break ;
 	
@@ -664,10 +671,6 @@ void Resource::SyncSelf( Syncer* syncer, ResourceTree *res_tree, const Val& opti
 	{
 		// Update server time of this file
 		m_json->Set( "srv_time", Val( m_mtime.Sec() ) );
-	}
-
-	if ( m_state != sync && m_state != unknown ) {
-		system("notify-send -i emblem-synchronizing-symbolic -u low 'Google Drive' 'A sincronização terminou!'") ;
 	}
 }
 
