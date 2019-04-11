@@ -27,6 +27,8 @@ Enjoy!
 
 ## Usage
 
+> **NOTE**> install `notify-send` library
+
 When Grive is run for the first time, you should use the "-a" argument to grant
 permission to Grive to access to your Google Drive:
 

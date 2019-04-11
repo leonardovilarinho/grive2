@@ -525,6 +525,7 @@ bool Resource::CheckRename( Syncer* syncer, ResourceTree *res_tree )
 			Resource *m = *i;
 			if ( m->m_state == other )
 			{
+				system("notify-send -i emblem-synchronizing-symbolic 'Google Drive' 'Sincronizando com a nuvem...'") ;
 				Resource* from = m_state == local_new || m_state == remote_new ? m : this;
 				Resource* to = m_state == local_new || m_state == remote_new ? this : m;
 				Log( "sync %1% moved to %2%. moving %3%", from->Path(), to->Path(),
@@ -641,8 +642,9 @@ void Resource::SyncSelf( Syncer* syncer, ResourceTree *res_tree, const Val& opti
 		break ;
 	
 	case both_deleted :
-		if ( syncer )
-			DeleteIndex() ;
+		if ( syncer ) {
+			DeleteIndex() ;			
+		}
 		break ;
 	
 	case sync :
@@ -662,6 +664,10 @@ void Resource::SyncSelf( Syncer* syncer, ResourceTree *res_tree, const Val& opti
 	{
 		// Update server time of this file
 		m_json->Set( "srv_time", Val( m_mtime.Sec() ) );
+	}
+
+	if ( m_state != sync && m_state != unknown ) {
+		system("notify-send -i emblem-synchronizing-symbolic -u low 'Google Drive' 'A sincronização terminou!'") ;
 	}
 }
 

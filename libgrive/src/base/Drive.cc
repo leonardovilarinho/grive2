@@ -110,7 +110,6 @@ void Drive::Update()
 {
 	Log( "Synchronizing files", log::info ) ;
 	m_state.Sync( m_syncer, m_options ) ;
-	
 	UpdateChangeStamp( ) ;
 }
 
